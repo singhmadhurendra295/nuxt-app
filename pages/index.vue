@@ -16,7 +16,31 @@ export default {
   },
   data() {
     return {
+      //loading static data
       loadedPosts: [
+        // {
+        //   id: "1",
+        //   title: "First Post",
+        //   previewText: "This is our first post!",
+        //   thumbnail:
+        //     "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
+        // },
+        // {
+        //   id: "2",
+        //   title: "Second Post",
+        //   previewText: "This is our second post!",
+        //   thumbnail:
+        //     "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
+        // }
+      ]
+    };
+  },
+  created() {
+    //suppose getting datat from backend but loaded on the client side
+    // in this case page loaded first with static content and then render dynamic data back to the client
+    // to remove this problem use asyncData() which execute on the server
+    /*setTimeout(() => {
+      this.loadedPosts = [
         {
           id: "1",
           title: "First Post",
@@ -31,8 +55,39 @@ export default {
           thumbnail:
             "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
         }
-      ]
-    };
+      ];
+    }, 1500);*/
+  },
+  asyncData(
+    { isDev, route, store, env, params, query, req, res, redirect, error },
+    callback
+  ) {
+    //executed on the server
+    //get prerender the complete page back to the client
+    // this will not work becuse this executed before the page render so will not use this.loadedPosts
+    // only use for pages not for component, layout etc
+    setTimeout(() => {
+      // simple retun statement will not work
+      //this function should return promise or callback
+      callback(null, {
+        loadedPosts: [
+          {
+            id: "1",
+            title: "First Post",
+            previewText: "This is our first post!",
+            thumbnail:
+              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
+          },
+          {
+            id: "2",
+            title: "Second Post",
+            previewText: "This is our second post!",
+            thumbnail:
+              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
+          }
+        ]
+      });
+    }, 1500);
   }
 };
 </script>
