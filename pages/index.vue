@@ -14,7 +14,7 @@ export default {
   components: {
     PostList
   },
-  data() {
+  /*data() {
     return {
       //loading static data
       loadedPosts: [
@@ -34,7 +34,7 @@ export default {
         // }
       ]
     };
-  },
+  },*/
   created() {
     //suppose getting datat from backend but loaded on the client side
     // in this case page loaded first with static content and then render dynamic data back to the client
@@ -58,10 +58,11 @@ export default {
       ];
     }, 1500);*/
   },
-  asyncData(
+  /*asyncData(
     { isDev, route, store, env, params, query, req, res, redirect, error },
     callback
   ) {
+    console.log("async data executed")
     //executed on the server
     //get prerender the complete page back to the client
     // this will not work becuse this executed before the page render so will not use this.loadedPosts
@@ -88,6 +89,11 @@ export default {
         ]
       });
     }, 1500);
+  }*/
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts;
+    }
   }
 };
 </script>
